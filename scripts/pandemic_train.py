@@ -80,13 +80,13 @@ def make_model(env, args, config):
     return model
 
 def init(args):
-    cfg = wandb.config
+#     cfg = wandb.config
     n_cpus = args.n_cpus
     ps.init_globals(seed=0)
     sim_config = make_cfg(args)
     regulations = make_reg()
     viz = make_viz(sim_config)
-    done_fn = ps.env.DoneFunctionFactory.default(ps.env.DoneFunctionType.TIME_LIMIT, horizon=193 if cfg.four_start else 192)
+    done_fn = ps.env.DoneFunctionFactory.default(ps.env.DoneFunctionType.TIME_LIMIT, horizon=192) #if cfg.four_start else 192)
 
     # Adjust these rewards as desired
     reward_fn = SumReward(
@@ -113,7 +113,7 @@ def init(args):
             done_fn=done_fn,
             reward_fn=reward_fn,
             constrain=True,
-            four_start=cfg.four_start,
+            four_start=False,#cfg.four_start,
             obs_history_size=3,
             num_days_in_obs=8
         )
@@ -168,22 +168,22 @@ def main():
 
     args = parser.parse_known_args(sys.argv[1:])[0]
 
-    if args.test:
-        wandb.init(
-          project='TEST_PROJECT',
-          group="covid",
-          entity='ENTITY',
-          config=cfg,
-          sync_tensorboard=True
-        )
-    else:
-        wandb.init(
-          project='PROJECT',
-          group="covid",
-          entity='ENTITY',
-          config=cfg,
-          sync_tensorboard=True
-        )
+#     if args.test:
+#         wandb.init(
+#           project='TEST_PROJECT',
+#           group="covid",
+#           entity='ENTITY',
+#           config=cfg,
+#           sync_tensorboard=True
+#         )
+#     else:
+#         wandb.init(
+#           project='PROJECT',
+#           group="covid",
+#           entity='ENTITY',
+#           config=cfg,
+#           sync_tensorboard=True
+#         )
     train_env, test_env, viz = init(args)
     train(train_env, test_env, viz, args, config)
 
