@@ -105,7 +105,7 @@ def init(args):
         )
 
     sim_opt = PandemicSimOpts(spontaneous_testing_rate=args.testing_rate)
-    sim_opt.spontaneous_testing_rate = float(sys.argv[10])
+    sim_opt.spontaneous_testing_rate = 0.3
     gym = ps.env.PandemicPolicyGymEnv.from_config(
             sim_config=sim_config,
             sim_opts=sim_opt, 
