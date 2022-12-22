@@ -101,7 +101,7 @@ def init(args):
                 RewardFunctionFactory.default(RewardFunctionType.SMOOTH_STAGE_CHANGES,
                                               num_stages=len(regulations))
             ],
-            weights=[float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])]
+            weights = [10, 10, 0.1, 0.01] 
         )
 
     sim_opt = PandemicSimOpts(spontaneous_testing_rate=args.testing_rate)
